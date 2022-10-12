@@ -14,23 +14,23 @@ const defaultProps: { title: ReactNode; children: Child[] } = {
     title: <strong>Motion</strong>,
     children: [
         {
-            key: 'image',
-            title: 'Image',
+            key: 'new-image',
+            title: 'IMAGE',
             onClick: handleClick,
         },
         {
-            key: 'text',
-            title: 'Text',
+            key: 'new-note',
+            title: 'NOTE',
             onClick: handleClick,
         },
         {
-            key: 'video',
-            title: 'Video',
+            key: 'new-video',
+            title: 'VIDEO',
             onClick: handleClick,
         },
         {
-            key: 'todo',
-            title: 'To-Do',
+            key: 'new-todo',
+            title: 'TODO',
             onClick: handleClick,
         },
     ],
@@ -38,11 +38,19 @@ const defaultProps: { title: ReactNode; children: Child[] } = {
 
 function Header({ title, children }: { title: ReactNode; children: Child[] }) {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div
+            style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                backgroundColor: '#dcdcdcd6',
+            }}
+        >
             <h1
                 style={{
-                    padding: '0px',
+                    padding: '10px 20px',
                     margin: '20px 0px 10px 0px',
+                    color: '#6c6c6c',
                 }}
             >
                 {title}
@@ -50,7 +58,7 @@ function Header({ title, children }: { title: ReactNode; children: Child[] }) {
             <ul
                 style={{
                     padding: '0 10px',
-                    margin: '10px',
+                    margin: '5px',
                     listStyle: 'none',
                     display: 'flex',
                     flexDirection: 'row',
@@ -63,15 +71,15 @@ function Header({ title, children }: { title: ReactNode; children: Child[] }) {
                         <li key={child.key}>
                             <button
                                 style={{
-                                    backgroundColor: 'purple',
-                                    border: '2px solid yellow',
-                                    borderRadius: '5px',
-                                    width: '130px',
-                                    padding: '10px 20px',
-                                    margin: '10px',
-                                    fontFamily: 'monospace',
+                                    backgroundColor: '#515151',
+                                    border: 'none',
+                                    // borderRadius: '5px',
+                                    width: '140px',
+                                    padding: '13px 20px',
+                                    margin: '5px',
+                                    fontFamily: 'sans-serif',
                                     fontWeight: 'bold',
-                                    fontSize: '1.2rem',
+                                    fontSize: '1rem',
                                     color: 'white',
                                     cursor: 'pointer',
                                 }}
