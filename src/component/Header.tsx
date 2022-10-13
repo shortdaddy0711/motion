@@ -1,100 +1,93 @@
-import React, { ReactNode } from 'react';
+import React, { useState } from 'react';
+import { Menu, Row, Col, Typography } from 'antd';
+import type { MenuProps } from 'antd';
+import {
+    ThunderboltOutlined,
+    FileImageOutlined,
+    VideoCameraOutlined,
+    FormOutlined,
+    BarsOutlined,
+} from '@ant-design/icons';
 
-type Child = {
-    key: string;
-    title: string;
-    onClick: (event: React.MouseEvent<HTMLElement>) => void;
+const { Text } = Typography;
+
+const textStyle = { fontSize: '1em', color: 'white' };
+
+const iconStyle = {
+    fontSize: '1.3em',
+    color: 'white',
 };
 
-function handleClick(e: React.MouseEvent<HTMLElement>) {
-    console.log((e.target as Element).innerHTML);
+const menuItems: MenuProps['items'] = [
+    {
+        label: (
+            <Text strong style={textStyle}>
+                IMAGE
+            </Text>
+        ),
+        key: 'image',
+        icon: <FileImageOutlined style={iconStyle} />,
+    },
+    {
+        label: (
+            <Text strong style={textStyle}>
+                NOTE
+            </Text>
+        ),
+        key: 'note',
+        icon: <FormOutlined style={iconStyle} />,
+    },
+    {
+        label: (
+            <Text strong style={textStyle}>
+                VIDEO
+            </Text>
+        ),
+        key: 'video',
+        icon: <VideoCameraOutlined style={iconStyle} />,
+    },
+    {
+        label: (
+            <Text strong style={textStyle}>
+                TODO
+            </Text>
+        ),
+        key: 'todo',
+        icon: <BarsOutlined style={iconStyle} />,
+    },
+];
+
+interface menuItemProps {
+    menuItemClick: (state: boolean) => void;
 }
 
-const defaultProps: { title: ReactNode; children: Child[] } = {
-    title: <strong>Motion</strong>,
-    children: [
-        {
-            key: 'new-image',
-            title: 'IMAGE',
-            onClick: handleClick,
-        },
-        {
-            key: 'new-note',
-            title: 'NOTE',
-            onClick: handleClick,
-        },
-        {
-            key: 'new-video',
-            title: 'VIDEO',
-            onClick: handleClick,
-        },
-        {
-            key: 'new-todo',
-            title: 'TODO',
-            onClick: handleClick,
-        },
-    ],
-};
+const HeaderComponent = ({ menuItemClick }: menuItemProps) => {
+    const [current, setCurrent] = useState<string>('');
 
-function Header({ title, children }: { title: ReactNode; children: Child[] }) {
+    const handleClick: MenuProps['onClick'] = (e) => {
+        setCurrent(e.key);
+        menuItemClick(true);
+    };
+
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                backgroundColor: '#dcdcdcd6',
-            }}
-        >
-            <h1
-                style={{
-                    padding: '10px 20px',
-                    margin: '20px 0px 10px 0px',
-                    color: '#6c6c6c',
-                }}
-            >
-                {title}
-            </h1>
-            <ul
-                style={{
-                    padding: '0 10px',
-                    margin: '5px',
-                    listStyle: 'none',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'space-around',
-                }}
-            >
-                {children.map((child: Child) => {
-                    return (
-                        <li key={child.key}>
-                            <button
-                                style={{
-                                    backgroundColor: '#515151',
-                                    border: 'none',
-                                    // borderRadius: '5px',
-                                    width: '140px',
-                                    padding: '13px 20px',
-                                    margin: '5px',
-                                    fontFamily: 'sans-serif',
-                                    fontWeight: 'bold',
-                                    fontSize: '1rem',
-                                    color: 'white',
-                                    cursor: 'pointer',
-                                }}
-                                onClick={child.onClick}
-                            >
-                                {child.title}
-                            </button>
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+        <Row justify='center'>
+            <Col span={4}>
+                <div style={{ color: 'white', fontSize: '1.5rem', fontWeight: 'bold' }}>
+                    <ThunderboltOutlined />
+                    MOTION
+                </div>
+            </Col>
+            <Col span={10}>
+                <Menu
+                    onClick={handleClick}
+                    theme='dark'
+                    mode='horizontal'
+                    items={menuItems}
+                    selectedKeys={[current]}
+                />
+            </Col>
+        </Row>
     );
-}
+};
 
-Header.defaultProps = defaultProps;
-
-export default Header;
+export default HeaderComponent;
